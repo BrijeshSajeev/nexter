@@ -1,10 +1,12 @@
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const app = require("./app");
+
 dotenv.config({ path: "./config.env" });
 
 const DB = process.env.DATABASE.replace(
   "<PASSWORD>",
+  // eslint-disable-next-line prettier/prettier
   process.env.DATABASE_PASSWORD
 );
 
@@ -16,6 +18,7 @@ mongoose
     useUnifiedTopology: true,
   })
   .then((conn) => {
+    // console.log(conn);
     console.log("Connection Successfull");
   });
 

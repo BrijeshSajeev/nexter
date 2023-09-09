@@ -4,13 +4,16 @@ const catchAsync = require("../utils/catchAsync");
 const AppError = require("../utils/appError");
 
 exports.getAllHouses = catchAsync(async (req, res, next) => {
-  // console.log(req.query);
+  // console.log(req);
   const features = new ApiFeatures(House.find(), req.query)
     .filter()
     .sort()
     .limitFields()
     .pagenate();
+
   const houses = await features.query;
+  // const houses = await House.find();
+
   res.status(200).json({
     status: "success",
     results: houses.length,

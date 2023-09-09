@@ -40,9 +40,9 @@ houseSchema.pre("save", function (next) {
   next();
 });
 
-houseSchema.pre(/^find/, function (next) {
-  this.find({ sold: { $ne: true } });
-});
+// houseSchema.pre(/^find/, function (next) {
+//   this.find({ sold: { $ne: true } });
+// });
 
 const House = mongoose.model("House", houseSchema);
 

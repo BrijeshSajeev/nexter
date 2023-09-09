@@ -1,16 +1,32 @@
 const express = require("express");
-const HouseController = require("../controller/houseController");
+const houseController = require("../controller/houseController");
+const authController = require("../controller/authController");
 
 const router = express.Router();
 
 router
   .route("/")
-  .get(HouseController.getAllHouses)
-  .post(HouseController.addHouse);
+  .get(authController.protect, houseController.getAllHouses)
+  .post(
+    authController.protect,
+    authController.restrictTo("admin", "manager"),
+    // eslint-disable-next-line prettier/prettier
+    houseController.addHouse
+  );
 
 router
   .route("/:id")
-  .get(HouseController.getHouse)
-  .patch(HouseController.updateHouse)
-  .delete(HouseController.deleteHouse);
+  .get(houseController.getHouse)
+  .patch(
+    authController.protect,
+    authController.restrictTo("admin", "manager", "user"),
+    // eslint-disable-next-line prettier/prettier
+    houseController.updateHouse
+  )
+  .delete(
+    authController.protect,
+    authController.restrictTo("admin", "manager", "user"),
+    // eslint-disable-next-line prettier/prettier
+    houseController.deleteHouse
+  );
 module.exports = router;
